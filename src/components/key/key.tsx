@@ -1,77 +1,84 @@
-import { useContext } from 'react';
-import { AppContext } from '../../context/app.context';
+import { useDispatch } from 'react-redux';
+import { add, erase } from '../../core/features/phone.number/phoneSlice';
+import { useState } from 'react';
 
 export function Key() {
-  const { phoneNumber, setPhoneNumber, setActiveCall } = useContext(AppContext);
+  const initialState = { phoneNumber: '' };
 
-  const handleClick = (increment: string) => {
-    if (phoneNumber.length !== 9) {
-      if (phoneNumber.length === 8) {
-        setActiveCall(true);
-      }
-      setPhoneNumber(phoneNumber + increment);
+  const [phoneState, setPhoneState] = useState(initialState);
+  const dispatcher = useDispatch();
+
+  const handleClick = (key: string) => {
+    if (phoneState.phoneNumber.length === 10) {
+      return;
     }
+
+    setPhoneState((prevState) => ({
+      ...prevState,
+      phoneNumber: prevState.phoneNumber + key,
+    }));
+
+    dispatcher(add(phoneState));
   };
 
-  const handleClickDelete = () => {
-    setActiveCall(false);
-    setPhoneNumber('');
+  const handleDelete = () => {
+    setPhoneState(initialState);
+    dispatcher(erase());
   };
-
   return (
     <>
       <li>
-        <button className="key" onClick={() => handleClick('1')}>
+        <button onClick={() => handleClick('1')} className="key" value={1}>
           1
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('2')}>
+        <button onClick={() => handleClick('2')} className="key" value={2}>
           2
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('3')}>
+        <button onClick={() => handleClick('3')} className="key" value={3}>
           3
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('4')}>
+        <button onClick={() => handleClick('4')} className="key" value={4}>
           4
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('5')}>
+        <button onClick={() => handleClick('5')} className="key" value={5}>
           5
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('6')}>
+        <button onClick={() => handleClick('6')} className="key" value={6}>
           6
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('7')}>
+        <button onClick={() => handleClick('7')} className="key" value={7}>
           7
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('8')}>
+        <button onClick={() => handleClick('8')} className="key" value={8}>
           8
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('9')}>
+        <button onClick={() => handleClick('9')} className="key" value={9}>
           9
         </button>
       </li>
       <li>
-        <button className="key" onClick={() => handleClick('0')}>
+        <button onClick={() => handleClick('0')} className="key" value={0}>
           0
         </button>
       </li>
       <li>
-        <button className="key big" onClick={() => handleClickDelete()}>
+        <button className="key big" onClick={handleDelete}>
           delete
         </button>
       </li>

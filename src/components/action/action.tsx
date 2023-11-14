@@ -1,35 +1,40 @@
-import { useContext } from 'react';
-import { AppContext } from '../../context/app.context';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../core/store';
+import { phoneStatus } from '../../core/features/phone.call/callSlice';
+
 export function Action() {
-  const { isActiveCall, setCall, setActiveCall, setPhoneNumber } =
-    useContext(AppContext);
+  const dispatcher = useDispatch();
 
-  const handleClickToCall = () => {
-    setCall(true);
-
-    setTimeout(() => {
-      setCall(false);
-      setActiveCall(false);
-      setPhoneNumber('');
-    }, 5000);
+  const handleCall = () => {
+    dispatcher(phoneStatus({ isCalling: true }));
+    console.log(callState);
   };
+
+  const handleHang = () => {
+    dispatcher(phoneStatus({ isCalling: false }));
+    console.log(callState);
+  };
+
+  const phoneState = useSelector((state: RootState) => state.phone);
+  const callState = useSelector((state: RootState) => state.call.isCalling);
 
   return (
     <>
-      {/* {isActiveCall ? (
-        <a href="#" className="call active" onClick={() => handleClickToCall()}>
-          Call
-        </a>
-      ) : (
-        <a href="#" className="hang active" onClick={() => handleClickToHang()}>
-          Hang
-        </a>
-      )} */}
-      {isActiveCall && (
-        <a href="#" className="call active" onClick={() => handleClickToCall()}>
-          Call
-        </a>
-      )}
+      <span className="number">{phoneState.phoneNumber}</span>
+      <a
+        href="#"
+        className={callState ? 'call' : 'call active'}
+        onClick={handleCall}
+      >
+        Call
+      </a>
+      <a
+        href="#"
+        className={callState ? 'hang active' : 'hang'}
+        onClick={handleHang}
+      >
+        Hang
+      </a>
     </>
   );
 }
