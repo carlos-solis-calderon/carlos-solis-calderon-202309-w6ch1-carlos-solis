@@ -12,11 +12,11 @@ const phoneSlice = createSlice({
   name: 'phone',
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<PhoneState>) => {
+    create: (state, action: PayloadAction<PhoneState>) => {
       console.log(state);
       return action.payload;
     },
-    erase: (state) => {
+    remove: (state) => {
       console.log(state);
       return initialState;
     },
@@ -24,4 +24,4 @@ const phoneSlice = createSlice({
 });
 
 export default phoneSlice.reducer;
-export const { add, erase } = phoneSlice.actions;
+export const { create, remove } = phoneSlice.actions;

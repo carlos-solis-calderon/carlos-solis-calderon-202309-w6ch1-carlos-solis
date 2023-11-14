@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { add, erase } from '../../core/features/phone.number/phoneSlice';
+import { create, remove } from '../../core/features/phone.number/phoneSlice';
 import { useState } from 'react';
 
 export function Key() {
@@ -18,12 +18,12 @@ export function Key() {
       phoneNumber: prevState.phoneNumber + key,
     }));
 
-    dispatcher(add(phoneState));
+    dispatcher(create(phoneState));
   };
 
   const handleDelete = () => {
     setPhoneState(initialState);
-    dispatcher(erase());
+    dispatcher(remove());
   };
   return (
     <>
