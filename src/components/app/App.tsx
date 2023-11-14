@@ -1,17 +1,21 @@
+import { Action } from '../action/action';
 import { Actions } from '../actions/actions';
 import { Info } from '../info/info';
+import { Key } from '../key/key';
 import { Keyboard } from '../keyboard/keyboard';
 
-function App() {
+export default function App() {
   return (
-    <>
+    <div className="container">
       <Info></Info>
       <main className="phone">
-        <Keyboard></Keyboard>
-        <Actions></Actions>
+        <Keyboard>
+          <Key></Key>
+        </Keyboard>
+        <Actions>
+          <Action></Action>
+        </Actions>
       </main>
-    </>
+    </div>
   );
 }
-
-export default App;
